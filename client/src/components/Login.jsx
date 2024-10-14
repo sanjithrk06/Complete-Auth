@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     setEmailValid(validateEmail(email));
     setPasswordValid(password.length >= 6);
 
@@ -35,11 +36,11 @@ const Login = () => {
       >
         <main id="page-content" className="flex max-w-full flex-auto flex-col">
           <div className="relative mx-auto flex min-h-dvh w-full max-w-10xl items-center justify-center overflow-hidden p-4 lg:p-8">
-            <section className="w-full max-w-xl py-6">
-              <header className="mb-10 text-center">
-                <h1 className="mb-2 inline-flex items-center gap-2 text-2xl font-bold">
+            <section className="w-full max-w-md py-2">
+              <header className="mb-6 text-center">
+                <h1 className="mb-1 inline-flex items-center gap-1 text-lg font-bold">
                   <svg
-                    className="hi-mini hi-cube-transparent inline-block size-5 text-primary"
+                    className="hi-mini hi-cube-transparent inline-block size-4 text-primary"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -53,14 +54,14 @@ const Login = () => {
                   </svg>
                   <span>One Trip</span>
                 </h1>
-                <h2 className="text-sm font-medium text-slate-600">
+                <h2 className=" text-xs font-medium text-slate-600">
                   Please sign in to start exploring
                 </h2>
               </header>
 
               <div className="flex flex-col overflow-hidden rounded-lg bg-white shadow-sm">
-                <div className="grow p-5 md:px-12 md:py-10">
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grow p-4 md:px-8 md:py-6">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <h1 className="mb-0 text-center text-2xl text-primary font-bold">
                       Welcome back
                     </h1>
@@ -79,7 +80,7 @@ const Login = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Enter your email"
-                        className={`block w-full rounded-lg outline-none border px-5 py-3 leading-6 text-slate-700 placeholder-gray-400 focus:ring-2 focus:ring-primary/50 ${
+                        className={`block w-full rounded-lg outline-none border px-4 py-2 leading-6 text-slate-700 placeholder-gray-400 focus:ring-2 focus:ring-primary/50 ${
                           isEmailValid
                             ? "border-gray-200 focus:border-primary"
                             : "border-red-500 focus:border-red-500"
@@ -107,7 +108,7 @@ const Login = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
-                        className={`block w-full rounded-lg outline-none border px-5 py-3 leading-6 text-slate-700 placeholder-gray-500 focus:ring-2 focus:ring-primary/50 ${
+                        className={`block w-full rounded-lg outline-none border px-4 py-2 leading-6 text-slate-700 placeholder-gray-400 focus:ring-2 focus:ring-primary/50 ${
                           isPasswordValid
                             ? "border-gray-200 focus:border-primary"
                             : "border-red-500 focus:border-red-500"
@@ -123,50 +124,57 @@ const Login = () => {
                       <button
                         type="button"
                         onClick={togglePasswordVisibility}
-                        className="absolute right-4 top-10 text-slate-500 hover:text-slate-700"
+                        className="absolute right-4 top-9 text-slate-500 hover:text-slate-700"
                       >
                         {isPasswordVisible ? (
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
+                            clipRule="evenodd"
+                            fillRule="evenodd"
                             fill="currentColor"
+                            strokeLinejoin="round"
+                            strokeMiterlimit="2"
                             className="w-5 h-5"
                             viewBox="0 0 24 24"
                           >
-                            <path d="M11.885 14.988l3.104-3.098.011.11c0 1.654-1.346 3-3 3l-.115-.012zm8.048-8.032l-3.274 3.268c.212.554.341 1.149.341 1.776 0 2.757-2.243 5-5 5-.631 0-1.229-.13-1.785-.344l-2.377 2.372c1.276.588 2.671.972 4.177.972 7.733 0 11.985-8.449 11.985-8.449s-1.415-2.478-4.067-4.595zm1.431-3.536l-18.619 18.58-1.382-1.422 3.455-3.447c-3.022-2.45-4.818-5.58-4.818-5.58s4.446-7.551 12.015-7.551c1.825 0 3.456.426 4.886 1.075l3.081-3.075 1.382 1.42zm-13.751 10.922l1.519-1.515c-.077-.264-.132-.538-.132-.827 0-1.654 1.346-3 3-3 .291 0 .567.055.833.134l1.518-1.515c-.704-.382-1.496-.619-2.351-.619-2.757 0-5 2.243-5 5 0 .852.235 1.641.613 2.342z" />
+                            <path
+                              d="M11.885 14.988l3.104-3.098.011.11c0 1.654-1.346 3-3 3l-.115-.012zm8.048-8.032l-3.274 3.268c.212.554.341 1.149.341 1.776 0 2.757-2.243 5-5 5-.631 0-1.229-.13-1.785-.344l-2.377 2.372c1.276.588 2.671.972 4.177.972 7.733 0 11.985-8.449 11.985-8.449s-1.415-2.478-4.067-4.595zm1.431-3.536l-18.619 18.58-1.382-1.422 3.455-3.447c-3.022-2.45-4.818-5.58-4.818-5.58s4.446-7.551 12.015-7.551c1.825 0 3.456.426 4.886 1.075l3.081-3.075 1.382 1.42zm-13.751 10.922l1.519-1.515c-.077-.264-.132-.538-.132-.827 0-1.654 1.346-3 3-3 .291 0 .567.055.833.134l1.518-1.515c-.704-.382-1.496-.619-2.351-.619-2.757 0-5 2.243-5 5 0 .852.235 1.641.613 2.342z"
+                              fillRule="nonzero"
+                            />
                           </svg>
                         ) : (
                           <svg
-                            clip-rule="evenodd"
-                            fill-rule="evenodd"
+                            clipRule="evenodd"
+                            fillRule="evenodd"
                             fill="currentColor"
                             className="w-5 h-5"
-                            stroke-linejoin="round"
-                            stroke-miterlimit="2"
+                            strokeLinejoin="round"
+                            strokeMiterlimit="2"
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path
                               d="m11.998 5c-4.078 0-7.742 3.093-9.853 6.483-.096.159-.145.338-.145.517s.048.358.144.517c2.112 3.39 5.776 6.483 9.854 6.483 4.143 0 7.796-3.09 9.864-6.493.092-.156.138-.332.138-.507s-.046-.351-.138-.507c-2.068-3.403-5.721-6.493-9.864-6.493zm.002 3c2.208 0 4 1.792 4 4s-1.792 4-4 4-4-1.792-4-4 1.792-4 4-4zm0 1.5c1.38 0 2.5 1.12 2.5 2.5s-1.12 2.5-2.5 2.5-2.5-1.12-2.5-2.5 1.12-2.5 2.5-2.5z"
-                              fill-rule="nonzero"
+                              fillRule="nonzero"
                             />
                           </svg>
                         )}
                       </button>
-                    </div>
 
-                    <div>
-                      <div className="mb-5 flex items-center justify-between gap-2">
+                      <div className="pt-1 flex items-center justify-between gap-0">
                         <a
                           href="#"
-                          className="inline-block text-sm font-medium text-primary hover:text-primary"
+                          className="inline-block text-xs font-medium text-primary hover:text-primary"
                         >
                           Forgot Password?
                         </a>
                       </div>
+                    </div>
 
+                    <div>
                       <button
                         type="submit"
-                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary bg-primary/90 px-6 py-3 font-semibold leading-6 text-white hover:border-primary hover:bg-primary hover:text-white focus:ring focus:ring-rose-400/50 active:border-primary active:bg-primary"
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary bg-primary/90 px-5 py-2 font-semibold leading-6 text-md text-white hover:border-primary hover:bg-primary hover:text-white focus:ring focus:ring-rose-400/50 active:border-primary active:bg-primary"
                       >
                         <svg
                           className="hi-mini hi-arrow-uturn-right inline-block size-5 opacity-50"
@@ -189,7 +197,7 @@ const Login = () => {
                           aria-hidden="true"
                           className="h-0.5 grow rounded bg-gray-100"
                         />
-                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-800">
+                        <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600">
                           or sign in with
                         </span>
                         <span
@@ -201,7 +209,7 @@ const Login = () => {
                       <div className="grid grid-cols-1 gap-0">
                         <button
                           type="button"
-                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-300 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none"
+                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none"
                         >
                           <svg
                             className=" inline-block size-4"
@@ -234,12 +242,12 @@ const Login = () => {
                 </div>
                 <div className="grow bg-gray-50 p-5 pt-0 text-center text-sm md:px-16">
                   Don’t have an account yet?{" "}
-                  <a
-                    href="#"
+                  <Link
+                    to={"/signup"}
                     className="font-medium text-primary hover:text-rose-400"
                   >
                     Create account
-                  </a>
+                  </Link>
                 </div>
               </div>
             </section>
