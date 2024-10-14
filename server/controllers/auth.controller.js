@@ -1,6 +1,8 @@
 import { User } from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import { generateTokenAndSetCookies } from "../utils/generateTokenAndSetCookie.js";
+import { sendVerficationEmail } from "../nodemailer/emails.js";
+// import { sendVerficationEmail } from "../mailtrap/emails.js";
 
 export const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -29,10 +31,12 @@ export const signup = async (req, res) => {
       verificationTokenExpiresAt: Date.now() + 24 * 60 * 60 * 1000, //24 hours
     });
 
-    await user.save();
-
     //jwt
     generateTokenAndSetCookies(res, user._id);
+
+    await sendVerficationEmail(user.email, verificationToken);
+
+    await user.save();
 
     res.status(201).json({
       success: true,
