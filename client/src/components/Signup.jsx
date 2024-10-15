@@ -62,7 +62,7 @@ const Signup = () => {
       >
         <main id="page-content" className="flex max-w-full flex-auto flex-col">
           <div className="relative mx-auto flex min-h-dvh w-full max-w-10xl items-center justify-center overflow-hidden p-4 lg:p-8">
-            <section className="w-full max-w-2xl py-1">
+            <section className="w-full max-w-2xl py-1 px-4">
               <header className="mb-6 text-center">
                 <h1 className="mb-1 inline-flex items-center gap-1 text-lg font-bold">
                   <svg
@@ -92,9 +92,9 @@ const Signup = () => {
                       Create Your Account
                     </h1>
 
-                    <div className=" flex flex-row gap-4">
+                    <div className=" flex flex-col md:flex-row gap-4">
                       {/* First Name */}
-                      <div className=" w-1/2 space-y-1">
+                      <div className=" w-full md:w-1/2 space-y-1">
                         <label
                           htmlFor="first-name"
                           className="text-sm text-slate-800 font-semibold"
@@ -114,7 +114,7 @@ const Signup = () => {
                       </div>
 
                       {/* Last Name */}
-                      <div className=" w-1/2 space-y-1">
+                      <div className=" w-full md:w-1/2 space-y-1">
                         <label
                           htmlFor="last-name"
                           className="text-sm text-slate-800 font-semibold"
@@ -162,9 +162,9 @@ const Signup = () => {
                       )}
                     </div>
 
-                    <div className=" flex flex-row gap-4">
+                    <div className=" flex flex-col md:flex-row gap-4">
                       {/* Password Input */}
-                      <div className="w-1/2 space-y-1 relative">
+                      <div className="w-full md:w-1/2 space-y-1 relative">
                         <label
                           htmlFor="password"
                           className="text-sm text-slate-800 font-semibold"
@@ -231,7 +231,7 @@ const Signup = () => {
                       </div>
 
                       {/* Confirm Password */}
-                      <div className=" w-1/2 space-y-1 relative">
+                      <div className=" w-full md:w-1/2 space-y-1 relative">
                         <label
                           htmlFor="confirm-password"
                           className="text-sm text-slate-800 font-semibold"
