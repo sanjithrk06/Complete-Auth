@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Loader from "../components/LoadingSpinner";
+import { useAuthStore } from "../store/authStore";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
@@ -17,6 +19,9 @@ const Signup = () => {
   const [isPasswordValid, setPasswordValid] = useState(true);
   const [isConfirmPasswordValid, setConfirmPasswordValid] = useState(true);
 
+  const navigate = useNavigate();
+  const { signup, error, isLoading } = useAuthStore();
+
   const validateEmail = (email) => {
     return EMAIL_REGEX.test(email);
   };
@@ -29,7 +34,7 @@ const Signup = () => {
     return USER_REGEX.test(name);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setEmailValid(validateEmail(email));
@@ -42,7 +47,14 @@ const Signup = () => {
       validatePass(password) &&
       password === confirmPassword
     ) {
-      console.log("Form is valid, proceed to sign up...");
+      const name = `${firstName} ${lastName}`.trim();
+
+      try {
+        await signup(email, password, name);
+        navigate("/verify-email");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -299,12 +311,20 @@ const Signup = () => {
                       </div>
                     </div>
 
+                    {error && (
+                      <p className="text-red-500 font-semibold mt-2">{error}</p>
+                    )}
+
                     {/* Submit Button */}
                     <button
                       type="submit"
                       className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
                     >
-                      Sign Up
+                      {isLoading ? (
+                        <Loader className=" animate-spin mx-auto" size={12} />
+                      ) : (
+                        "Sign Up"
+                      )}
                     </button>
 
                     <div className="my-5 flex items-center">
@@ -354,6 +374,7 @@ const Signup = () => {
                     </div>
                   </form>
                 </div>
+
                 <div className="grow bg-gray-50 p-5 pt-0 text-center text-sm md:px-16">
                   Already have an account?{" "}
                   <Link
