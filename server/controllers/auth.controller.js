@@ -104,7 +104,7 @@ export const login = async (req, res) => {
     if (!user) {
       return res
         .status(400)
-        .json({ success: false, message: "Invalid credentials" });
+        .json({ success: false, message: "User not found" });
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
@@ -133,7 +133,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const forgetPassword = async (req, res) => {
+export const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -152,13 +152,13 @@ export const forgetPassword = async (req, res) => {
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpiresAt = resetExpiresAt;
 
-    await user.save();
-
     //send email
     await sendPasswordResetEmail(
       user.email,
       `${process.env.CLIENT_URL}/reset-password/${resetToken}`
     );
+
+    await user.save();
 
     res.status(200).json({
       success: true,

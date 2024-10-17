@@ -237,7 +237,7 @@ const Signup = () => {
                         </button>
                         {!isPasswordValid && (
                           <p className="text-xs text-red-600">
-                            Password must be at least 6 characters long.
+                            Password must be at least 8 characters long.
                           </p>
                         )}
                       </div>
@@ -321,6 +321,7 @@ const Signup = () => {
                     <button
                       type="submit"
                       disabled={isLoading}
+                      onClick={handleSubmit}
                       className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
                     >
                       {isLoading ? (

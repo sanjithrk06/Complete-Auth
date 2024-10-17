@@ -9,10 +9,12 @@ import {
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
 import Dashboard from "./pages/Dashboard";
 import { useAuthStore } from "./store/authStore";
 import { Toaster } from "react-hot-toast";
 import LoadingSpinner from "./components/LoadingSpinner";
+import ResetPassword from "./pages/ResetPassword";
 
 // Protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -81,23 +83,22 @@ function App() {
           }
         />
         <Route path="/verify-email" element={<VerifyEmail />} />
-        {/* <Route
+        <Route
           path="/forgot-password"
           element={
             <RedirectAuthenticatedUser>
-              <ForgotPasswordPage />
+              <ForgotPassword />
             </RedirectAuthenticatedUser>
           }
         />
-
         <Route
           path="/reset-password/:token"
           element={
             <RedirectAuthenticatedUser>
-              <ResetPasswordPage />
+              <ResetPassword />
             </RedirectAuthenticatedUser>
           }
-        /> */}
+        />
         {/* catch all routes */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </>
