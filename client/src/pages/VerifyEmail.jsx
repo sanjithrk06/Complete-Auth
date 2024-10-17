@@ -1,13 +1,20 @@
-import React, { useEffect, useRef, useState } from "react";
+// States & router components
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+// Auth Store
 import { useAuthStore } from "../store/authStore";
+
+// Toaster
 import toast from "react-hot-toast";
 
 const VerifyEmail = () => {
+  // States
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const navigate = useNavigate();
 
+  // State components
   const { error, isLoading, verifyEmail } = useAuthStore();
 
   const handleChange = (index, value) => {

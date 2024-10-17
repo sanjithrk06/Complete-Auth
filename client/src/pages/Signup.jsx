@@ -1,27 +1,47 @@
-import React, { useState } from "react";
+// States, router components & icons
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Loader from "../components/LoadingSpinner";
+import { Loader } from "lucide-react";
+
+// OAuth
+import { LoginSocialGoogle } from "reactjs-social-login";
+
+// Auth Store
 import { useAuthStore } from "../store/authStore";
 
+// Regex
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /\S+@\S+\.\S+/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const Signup = () => {
+  // ENV variable
+  const clientId = import.meta.env.CLIENT_ID;
+  console.log(import.meta.env.CLIENT_ID);
+
+  // Name state
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+
+  // Email state
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isEmailValid, setEmailValid] = useState(true);
+
+  // Password State
+  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isPasswordValid, setPasswordValid] = useState(true);
+
+  // Confirm Password State
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [isConfirmPasswordValid, setConfirmPasswordValid] = useState(true);
 
-  const navigate = useNavigate();
+  // Auth state components
   const { signup, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
 
+  // Validations
   const validateEmail = (email) => {
     return EMAIL_REGEX.test(email);
   };
@@ -34,6 +54,7 @@ const Signup = () => {
     return USER_REGEX.test(name);
   };
 
+  // Handlers
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -345,36 +366,47 @@ const Signup = () => {
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 gap-0">
-                      <button
-                        type="button"
-                        className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none"
+                    <div className="flex justify-center gap-0">
+                      <LoginSocialGoogle
+                        client_id="921148247670-j250gddpuu8pfrevv0v2enk0ph7h9f71.apps.googleusercontent.com"
+                        access_type="offline"
+                        onResolve={({ provider, data }) => {
+                          console.log(provider, data);
+                        }}
+                        onReject={(err) => {
+                          console.log(err);
+                        }}
                       >
-                        <svg
-                          className=" inline-block size-4"
-                          viewBox="-3 0 262 262"
-                          xmlns="http://www.w3.org/2000/svg"
-                          preserveAspectRatio="xMidYMid"
+                        <button
+                          type="button"
+                          className="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-semibold leading-5 text-gray-800 hover:border-gray-200 hover:bg-gray-100 hover:text-gray-900 hover:shadow-sm focus:ring focus:ring-gray-300/25 active:border-gray-200 active:shadow-none"
                         >
-                          <path
-                            d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
-                            fill="#4285F4"
-                          />
-                          <path
-                            d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
-                            fill="#34A853"
-                          />
-                          <path
-                            d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
-                            fill="#FBBC05"
-                          />
-                          <path
-                            d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
-                            fill="#EB4335"
-                          />
-                        </svg>
-                        <span>Signup with Google</span>
-                      </button>
+                          <svg
+                            className=" inline-block size-4"
+                            viewBox="-3 0 262 262"
+                            xmlns="http://www.w3.org/2000/svg"
+                            preserveAspectRatio="xMidYMid"
+                          >
+                            <path
+                              d="M255.878 133.451c0-10.734-.871-18.567-2.756-26.69H130.55v48.448h71.947c-1.45 12.04-9.283 30.172-26.69 42.356l-.244 1.622 38.755 30.023 2.685.268c24.659-22.774 38.875-56.282 38.875-96.027"
+                              fill="#4285F4"
+                            />
+                            <path
+                              d="M130.55 261.1c35.248 0 64.839-11.605 86.453-31.622l-41.196-31.913c-11.024 7.688-25.82 13.055-45.257 13.055-34.523 0-63.824-22.773-74.269-54.25l-1.531.13-40.298 31.187-.527 1.465C35.393 231.798 79.49 261.1 130.55 261.1"
+                              fill="#34A853"
+                            />
+                            <path
+                              d="M56.281 156.37c-2.756-8.123-4.351-16.827-4.351-25.82 0-8.994 1.595-17.697 4.206-25.82l-.073-1.73L15.26 71.312l-1.335.635C5.077 89.644 0 109.517 0 130.55s5.077 40.905 13.925 58.602l42.356-32.782"
+                              fill="#FBBC05"
+                            />
+                            <path
+                              d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0 79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
+                              fill="#EB4335"
+                            />
+                          </svg>
+                          <span>Signup with Google</span>
+                        </button>
+                      </LoginSocialGoogle>
                     </div>
                   </form>
                 </div>

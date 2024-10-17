@@ -1,10 +1,14 @@
-import React from "react";
+// Auth Store
 import { useAuthStore } from "../store/authStore";
+
+// Utils
 import { formatDate } from "../utils/date";
 
 const Dashboard = () => {
+  // Auth state components
   const { user, logout } = useAuthStore();
 
+  // Handler
   const handleLogout = () => {
     logout();
   };

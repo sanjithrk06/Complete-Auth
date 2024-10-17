@@ -1,21 +1,28 @@
-import React, { useState } from "react";
-
+// States, router components & icons
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
 import { ArrowLeft, Loader, Mail } from "lucide-react";
 
+// Auth store
+import { useAuthStore } from "../store/authStore";
+
 const ForgotPassword = () => {
+  // Email states
   const [email, setEmail] = useState("");
   const [isEmailValid, setEmailValid] = useState(true);
+
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Auth state components
   const { isLoading, forgotPassword, error } = useAuthStore();
 
+  // Validation
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
+  // Handlers
   const handleSubmit = async (e) => {
     e.preventDefault();
 

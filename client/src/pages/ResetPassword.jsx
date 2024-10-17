@@ -1,30 +1,38 @@
-import React, { useState } from "react";
-
+// States, router components & icons
+import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAuthStore } from "../store/authStore";
-
 import toast from "react-hot-toast";
 import { ArrowLeft } from "lucide-react";
 
+// Auth store
+import { useAuthStore } from "../store/authStore";
+
+// Regex
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
 const ResetPassword = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [isPasswordValid, setPasswordValid] = useState(true);
-  const [isConfirmPasswordValid, setConfirmPasswordValid] = useState(true);
-
-  const { resetPassword, error, isLoading, message } = useAuthStore();
-  const navigate = useNavigate();
-
   const { token } = useParams();
 
+  // Password State
+  const [password, setPassword] = useState("");
+  const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isPasswordValid, setPasswordValid] = useState(true);
+
+  // Confirm Password State
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isConfirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
+  const [isConfirmPasswordValid, setConfirmPasswordValid] = useState(true);
+
+  // Auth state components
+  const { resetPassword, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
+
+  // Validation
   const validatePass = (pwd) => {
     return PWD_REGEX.test(pwd);
   };
 
+  // Handlers
   const handleSubmit = async (e) => {
     e.preventDefault();
 

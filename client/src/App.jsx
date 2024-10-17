@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+// React states & router components
+import { useEffect } from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -6,15 +7,21 @@ import {
   Navigate,
   createRoutesFromElements,
 } from "react-router-dom";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import VerifyEmail from "./pages/VerifyEmail";
-import ForgotPassword from "./pages/ForgotPassword";
-import Dashboard from "./pages/Dashboard";
+
+// Pages & Loader
+import {
+  Dashboard,
+  ForgotPassword,
+  Login,
+  ResetPassword,
+  Signup,
+  VerifyEmail,
+} from "./pages";
+import LoadingSpinner from "./components/LoadingSpinner";
+
+// Auth Store
 import { useAuthStore } from "./store/authStore";
 import { Toaster } from "react-hot-toast";
-import LoadingSpinner from "./components/LoadingSpinner";
-import ResetPassword from "./pages/ResetPassword";
 
 // Protect routes that require authentication
 const ProtectedRoute = ({ children }) => {
@@ -48,9 +55,6 @@ function App() {
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
-
-  console.log("isAuthenticated", isAuthenticated);
-  console.log("user", user);
 
   if (isCheckingAuth) return <LoadingSpinner />;
 

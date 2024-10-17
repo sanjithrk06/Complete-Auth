@@ -1,9 +1,10 @@
+// State management tool (Zustand)
 import { create } from "zustand";
+
+// axios components
 import axios from "axios";
-
-const API_URL = "http://localhost:5001/api/auth";
-
 axios.defaults.withCredentials = true;
+const API_URL = "http://localhost:5001/api/auth";
 
 export const useAuthStore = create((set) => ({
   user: null,
