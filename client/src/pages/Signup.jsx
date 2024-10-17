@@ -312,12 +312,15 @@ const Signup = () => {
                     </div>
 
                     {error && (
-                      <p className="text-red-500 font-semibold mt-2">{error}</p>
+                      <p className="text-red-500 font-semibold text-sm mt-2 mb-1">
+                        {error}
+                      </p>
                     )}
 
                     {/* Submit Button */}
                     <button
                       type="submit"
+                      disabled={isLoading}
                       className="w-full rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary/50"
                     >
                       {isLoading ? (

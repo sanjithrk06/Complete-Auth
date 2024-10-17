@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+
+import Loader from "../components/LoadingSpinner";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/authStore";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,19 +11,27 @@ const Login = () => {
   const [isEmailValid, setEmailValid] = useState(true);
   const [isPasswordValid, setPasswordValid] = useState(true);
 
+  const { login, error, isLoading } = useAuthStore();
+  const navigate = useNavigate();
+
   const validateEmail = (email) => {
     const re = /\S+@\S+\.\S+/;
     return re.test(email);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setEmailValid(validateEmail(email));
     setPasswordValid(password.length >= 6);
 
     if (validateEmail(email) && password.length >= 6) {
-      console.log("Form is valid, proceed to sign in...");
+      try {
+        await login(email, password);
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -172,24 +183,21 @@ const Login = () => {
                     </div>
 
                     <div>
+                      {error && (
+                        <p className="text-red-500 font-semibold text-sm mt-2 mb-1">
+                          {error}
+                        </p>
+                      )}
                       <button
                         type="submit"
+                        disabled={isLoading}
                         className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-primary bg-primary/90 px-5 py-2 font-semibold leading-6 text-md text-white hover:border-primary hover:bg-primary hover:text-white focus:ring focus:ring-rose-400/50 active:border-primary active:bg-primary"
                       >
-                        <svg
-                          className="hi-mini hi-arrow-uturn-right inline-block size-5 opacity-50"
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 20 20"
-                          fill="currentColor"
-                          aria-hidden="true"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            d="M12.207 2.232a.75.75 0 00.025 1.06l4.146 3.958H6.375a5.375 5.375 0 000 10.75H9.25a.75.75 0 000-1.5H6.375a3.875 3.875 0 010-7.75h10.003l-4.146 3.957a.75.75 0 001.036 1.085l5.5-5.25a.75.75 0 000-1.085l-5.5-5.25a.75.75 0 00-1.06.025z"
-                            clipRule="evenodd"
-                          />
-                        </svg>
-                        <span>Sign In</span>
+                        {isLoading ? (
+                          <Loader className=" animate-spin mx-auto" size={12} />
+                        ) : (
+                          "Sign in"
+                        )}
                       </button>
 
                       <div className="my-5 flex items-center">
